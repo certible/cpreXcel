@@ -407,7 +407,7 @@ function error(s) {
 
 function help() {
     var scriptname = process.argv[1].replace(/\/.+\//,"");
-    var usage = "CPRE Excel Report Processor (" + version + ")\n\n" 
+    var usage = "Certible Exam Statistics Generator (" + version + ")\n\n" 
               + "Usage: \n" 
               + "\t" + process.argv[0] + " " + scriptname + " [OPTIONS] xml-files...\n"
               + "\nOptions:\n"
