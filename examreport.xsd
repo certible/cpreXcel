@@ -1,0 +1,191 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--
+Schema for exam reports (c) 2014 Certible
+-->
+<xsd:simpleType name="examEnum">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="CPREFL" />
+    <xsd:enumeration value="CPREALEC" />
+    <xsd:enumeration value="CPREALRM" />
+  </xsd:restriction>
+</xsd:simpleType>
+<!-- examEnum reperesents the type of the exam
+      CPREFL: CPRE Foundation Level
+      CPREALEC: CPRE Advanced Level E&C
+      CPREALRM: CPRE Advanced Level Modeling
+-->
+<xsd:simpleType name="choiceEnum">
+  <xsd:restriction base="xsd:int">
+    <xsd:enumeration value="0" />
+    <xsd:enumeration value="1" />
+    <xsd:enumeration value="2" />
+  </xsd:restriction>
+</xsd:simpleType>
+<!--
+    choiceEnum represents a candidate's answer.
+    Semantics:
+    A and P Questions:
+      0 - answer not selected
+      1 - answer selected
+    
+    K Questions
+      0 - no choice
+      1 - first (left) checkbox selected
+      2 - second (right) checkbox selected
+-->
+<xsd:simpleType name="genderEnum">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="f" />
+    <xsd:enumeration value="m" />
+  </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="ageCategoryEnum">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="0-17" />
+    <xsd:enumeration value="18-29" />
+    <xsd:enumeration value="30-39" />
+    <xsd:enumeration value="40-49" />
+    <xsd:enumeration value="50-59" />
+    <xsd:enumeration value="60+" />
+  </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="procedureEnum">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="paper" />
+    <xsd:enumeration value="tablet" />
+    <xsd:enumeration value="online" />
+  </xsd:restriction>
+</xsd:simpleType>
+<!--
+    procedureEnum represents the way the exam has been conducted
+-->
+
+<xsd:simpleType name="examLang">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="en" />
+    <xsd:enumeration value="de" />
+    <xsd:enumeration value="ch" />
+    <xsd:enumeration value="fr" />
+    <xsd:enumeration value="es" />
+    <xsd:enumeration value="pt" />
+</xsd:restriction>
+<!--
+    examLang: the language in which the exam was taken. 
+-->
+</xsd:simpleType>
+<xsd:complexType name="locationType">
+  <xsd:sequence>
+    <xsd:element name="city" type="xsd:string" />
+    <xsd:element name="country" type="xsd:string" />
+<!--
+    Where has the exam been conducted?
+    city: text
+    country: ISO_3166-1_alpha-2 Country Code
+-->    
+  </xsd:sequence>
+</xsd:complexType>
+  <xsd:element name="exams" type="examsType" />
+  <xsd:complexType name="examsType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="exam" type="examType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="examType">
+    <xsd:sequence>
+      <xsd:element name="location" type="locationType" />
+      <xsd:element name="date" type="xsd:date" /> <!-- When ha steh exam been conducted -->
+      <xsd:element name="certBody" type="xsd:string" /> <!-- Name of the certification body -->
+      <xsd:element name="pool" type="xsd:boolean" />
+<!--
+    pool: (true) exam questions are drawn from the exam question pool
+          (false) exam is based on the published exam sets
+-->
+      <xsd:element name="procedure" type="procedureEnum" />
+      <xsd:element name="examinees" type="examineesType" />
+    </xsd:sequence>
+    <xsd:attribute name="type" type="examEnum" />
+  </xsd:complexType>
+  <xsd:complexType name="examineesType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="examinee" type="examineeType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="examineeType">
+    <xsd:sequence>
+      <xsd:element name="nationality" type="xsd:string" />
+<!--
+    nationality of the candidate: ISO_3166-1_alpha-2 Country Code
+-->
+      <xsd:element name="gender" type="genderEnum" minOccurs="0" maxOccurs="1" />
+<!--
+    genderEnum: optional!
+-->
+      <xsd:element name="ageCategory" type="ageCategoryEnum" minOccurs="0" maxOccurs="1" />
+<!--
+    ageCategory: optional!
+-->
+      <xsd:element name="examLang" type="examLang" />
+<!--
+    lang: exam language (ISO_639-1)
+-->
+      <xsd:element name="nativeLang" type="xsd:boolean" />
+<!--
+    nativeLang: (true) the examinee's mother language equals the exam language
+                (false) examinee's mother language does not equal the exam language and thus the exam duration was +15 min
+-->
+      <xsd:element name="examRepetition" type="xsd:int" />
+<!--
+    repetition: exam was repeated n times
+-->          
+      <xsd:element name="student" type="xsd:boolean" />
+<!--
+    student: examinee is a student
+-->          
+      <xsd:element name="points" type="xsd:decimal" />
+<!--
+    points: exam result in points
+-->          
+      <xsd:element name="maxPoints" type="xsd:int" />
+<!--
+    points: maximum number of points
+-->          
+      <xsd:element name="percent" type="xsd:decimal" />
+<!--
+    points: exam result in percent
+-->          
+      <xsd:element name="passed" type="xsd:boolean" />
+      <xsd:element name="examDuration" type="xsd:decimal" />
+<!--
+    examDuration: exam duration in minutes
+-->          
+      <xsd:element name="answers" type="answersType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="answersType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="answer" type="answerType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="answerType">
+    <xsd:sequence>
+      <xsd:element name="points" type="xsd:decimal" />
+      <xsd:element name="choices" type="choicesType" />
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:string" /> <!-- question ID -->
+    <xsd:attribute name="version" type="xsd:string" /> <!-- version of the question: equals to teh version of the ste for fixed sets -->
+  </xsd:complexType>
+  <xsd:complexType name="choicesType">
+    <xsd:sequence>
+       <xsd:element maxOccurs="unbounded" name="choice" type="choiceEnumType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="choiceEnumType">
+      <xsd:simpleContent>
+          <xsd:extension base="choiceEnum">
+              <xsd:attribute name="id" type="xsd:string" use="required"/>
+          </xsd:extension>
+      </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>
