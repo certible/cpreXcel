@@ -1,0 +1,45 @@
+{
+  "trans": {
+    "chapter": {
+      "en": "Chapter",
+      "de": "Kapitel"
+    },
+    "candidate": {
+      "en": "Candidate",
+      "de": "Kandidat"
+    },
+    "average": {
+      "en": "Average",
+      "de": "Mittelwert"
+    },
+    "sum": {
+      "en": "Sum",
+      "de": "Summe"
+    }
+  },
+  "CPREXFL": {
+    "columns": 5,
+    "en": [
+      "Introduction and Foundations",
+      "System and Context Boundaries",
+      "Eliciting Requirements",
+      "Documenting Requirements",
+      "Documenting Requirements in Natural Language",
+      "Model-based Requirements Documentation",
+      "Requirements Validation and Negotiation",
+      "Requirements Management",
+      "Tool Support"
+    ],
+    "de": [
+      "Einleitung und Grundlagen",
+      "System- und Systemkontext abgrenzen",
+      "Anforderungen ermitteln",
+      "Dokumentation von Anforderungen",
+      "Natürlichsprachige Dokumentation von Anforderungen",
+      "Anforderungen modellbasiert dokumentieren",
+      "Anforderungen prüfen und abstimmen",
+      "Anforderungen verwalten",
+      "Werkzeugunterstützung"
+    ]
+  }
+}
